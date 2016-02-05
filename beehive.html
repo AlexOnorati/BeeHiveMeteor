@@ -3,6 +3,9 @@
     <body>
         <h1>BeeHive </h1>
         {{>yield}}
+       
+         {{> entriesTable}}
+        
     </body>
 </template>
 
@@ -16,11 +19,11 @@
         </div>
        <div class="form-group">
             <label for="mitecount">Mite Count </label>
-            <input type="int" name="mitecount"/>
+            <input type="number" name="mitecount"/>
         </div>
        <div class="form-group">
             <label for="duration">Duration</label>
-            <input type="int" name="duration"/>
+            <input type="number" name="duration"/>
         </div>
        <div class="form-group">
             <label for="collection">Collection Date</label>
@@ -32,7 +35,7 @@
     
     </form>
    
-        
+       
 </template>
 
 <template name="admin">
@@ -53,6 +56,26 @@
    
 </template>
 
-<template name="entries">
-   
+<template name="entriesTable">
+    <table class="table table-stripped">
+        <thead>
+        <tr>
+            <th>Hive Name</th>
+            <th>Mite Count</th>
+            <th>Duration</th>
+            <th>Collection Date</th>
+        </tr>
+        </thead>
+         <tbody>
+    {{#each entries}}
+       
+        <tr>
+            <td>{{name}}</td>
+            <td>{{count}}</td>
+            <td>{{duration}}</td>
+            <td>{{date}}</td>
+        </tr>
+    {{/each}}
+        </tbody>
+    </table>
 </template>

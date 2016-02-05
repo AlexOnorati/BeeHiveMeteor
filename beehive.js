@@ -13,7 +13,7 @@ Router.route('/admin', function(){
 Router.route('/entries/:_id', function(){
     this.render('entries', {
         data: function(){
-            return Messages.findOne({_id: this.params._id});
+            return Entries.findOne({_id: this.params._id});
         }
     });
     this.layout('layout');
@@ -25,7 +25,7 @@ Router.route('/entries/:_id', function(){
 );
 
 if (Meteor.isClient) {
-    
+    var hasSubmitted = true;
     Meteor.subscribe("entries");
     
     Template.beeinput.events(
@@ -46,8 +46,10 @@ if (Meteor.isClient) {
             
             var dateBox = $(event.target).find('input[name=collection]');
             var date = dateBox.val();
+            
            
             
+            if(name.length > 0 && count.length > 0 && duration.length > 0 && date.length > 0){
                 Entries.insert(
                 {
                     name: name,
@@ -55,13 +57,40 @@ if (Meteor.isClient) {
                     duration: duration,
                     date: date,
                     createdon: Date.now()
+                });
+                
+                hasSubmitted = true;
+                nameBox.css('border-color', 'gray');
+                countBox.css('border-color', 'gray');
+                durationBox.css('border-color', 'gray');
+                dateBox.css('border-color', 'gray');
+           
+            }else{
+                if(name.length == 0){
+                    nameBox.css('border-color', 'red');
                 }
-            );
+                
+                if(count.length == 0){
+                    countBox.css('border-color', 'red');
+                }
+                
+                if(duration.length == 0){
+                    durationBox.css('border-color', 'red');
+                }
+                
+                if(date.length == 0){
+                    dateBox.css('border-color', 'red');
+                }
+            }
         
-        }}
+        },
+        "hasSubmitted" : function (){
+            return hasSubmitted;
+        }
+}
   );
     
-    Template.beeinput.helpers({
+    Template.entriesTable.helpers({
         "entries": function(){
             return Entries.find(
                 {}, 
