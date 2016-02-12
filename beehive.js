@@ -10,10 +10,10 @@ Router.route('/admin', function(){
     this.layout('layout');
 });
 
-Router.route('/entries/:_id', function(){
+Router.route('/hive/:name', function(){
     this.render('entries', {
-        data: function(){
-            return Entries.findOne({_id: this.params._id});
+       data: function(){
+             return Entries.findOne({name: this.params.name});
         }
     });
     this.layout('layout');
@@ -89,7 +89,6 @@ if (Meteor.isClient) {
         }
 }
   );
-    
     Template.entriesTable.helpers({
         "entries": function(){
             return Entries.find(
@@ -108,5 +107,5 @@ if (Meteor.isServer) {
     
     Meteor.publish("entries", function(){
         return Entries.find();
-    })
+    });
 }

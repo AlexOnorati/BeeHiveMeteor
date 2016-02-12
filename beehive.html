@@ -4,7 +4,7 @@
         <h1>BeeHive </h1>
         {{>yield}}
        
-         {{> entriesTable}}
+       
         
     </body>
 </template>
@@ -40,20 +40,34 @@
 
 <template name="admin">
     <div class="col-xs-3">
-    {{#each entries}}
-        <br>
-    <a href="{{pathFor route='entries.show'}}"><div class="row-xs-2 row-sm-2 panel panel-default ">
-        <h4>{{name}}</h4>
-        <p>{{count}}<br></p>
-        <p>{{duration}}<br></p>
-        <p>{{date}}<br></p>
-        <br>
-        <p class="pull-right">{{createdon}}<br></p>
-        <br class="clearfix">
-    </div></a>
-    {{/each}}
+        {{> entriesTable}}
+    
     </div>
    
+</template>
+
+<template name="entries">
+    <table class="table table-stripped">
+        <thead>
+        <tr>
+            <th>Hive Name</th>
+            <th>Mite Count</th>
+            <th>Duration</th>
+            <th>Collection Date</th>
+        </tr>
+        </thead>
+         <tbody>
+    <!--{{#each getTableName}}-->
+       
+        <tr>
+            <td><a href="{{pathFor route='entries.show'}}">{{name}}</a></td>
+            <td>{{count}}</td>
+            <td>{{duration}}</td>
+            <td>{{date}}</td>
+        </tr>
+    <!--{{/each}}-->
+        </tbody>
+    </table>
 </template>
 
 <template name="entriesTable">
@@ -70,7 +84,7 @@
     {{#each entries}}
        
         <tr>
-            <td>{{name}}</td>
+            <td><a href="{{pathFor route='entries.show'}}">{{name}}</a></td>
             <td>{{count}}</td>
             <td>{{duration}}</td>
             <td>{{date}}</td>
